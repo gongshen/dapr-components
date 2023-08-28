@@ -1,0 +1,90 @@
+# Supported operations: create, operations and read
+# Config map:
+## output: A map of strings that will be part of the request for the output binding
+## readBindingTimeout : timeout to wait to receive test event
+## readBindingWait : duration to wait after successful Read before attempting to Publish
+## url: specific to http component, url of the http server
+## method: specific to http component, what method to use
+componentType: bindings
+components:
+  - component: redis.v6
+    operations: ["create", "operations"]
+    config:
+      output:
+        key: $((uuid))
+  - component: redis.v7
+    operations: ["create", "operations"]
+    config:
+      output:
+        key: $((uuid))
+  - component: azure.blobstorage
+    operations: ["create", "operations", "get", "list"]
+    config:
+      output:
+        blobName: $((uuid))
+      outputData: '{"maxResults": 10, "include": {"metadata": true, "snapshots": false}}'
+  - component: azure.cosmosdb
+    operations: ["create", "operations"]
+    config:
+      outputData: '{"id": "$((uuid))", "orderid": "abcdef-test", "partitionKey": "partitionValue", "nestedproperty": {"subproperty": "something of value for testing"}, "description": "conformance test item"}'
+  - component: azure.eventhubs
+    operations: ["create", "operations", "read"]
+    config:
+      # Need to wait for Event Hubs to acquire a lock, which can take up to 1m
+      readBindingWait: 60s
+  - component: azure.eventgrid
+    operations: ["create", "operations", "read"]
+    config:
+      readBindingTimeout: 240s
+      readBindingWait: 8s
+  - component: azure.storagequeues
+    operations: ["create", "operations", "read"]
+  - component: azure.servicebusqueues
+    operations: ["create", "operations", "read"]
+  - component: cron
+    operations: ["read"]
+  - component: kafka
+    profile: wurstmeister
+    operations: ["create", "operations"]
+  - component: kafka
+    profile: confluent
+    operations: ["create", "operations"]
+  - component: http
+    operations: ["create", "operations"]
+    config:
+      url: "localhost:22222"
+      method: "POST"
+  - component: influx
+    operations: ["create", "operations"]
+    config:
+      outputData: '{ "measurement": "TestMeasurement", "tags": "unit=temperature", "values": "avg=23.5" }'
+  - component: mqtt3
+    profile: mosquitto
+    operations: ["create", "operations", "read"]
+  - component: mqtt3
+    profile: emqx
+    operations: ["create", "operations", "read"]
+  - component: mqtt3
+    profile: vernemq
+    operations: ["create", "operations", "read"]
+  - component: rabbitmq
+    operations: ["create", "operations", "read"]
+    config:
+      checkInOrderProcessing: false
+  - component: kubemq
+    operations: [ "create", "operations", "read" ]
+  - component: postgres
+    allOperations: false
+    operations: [ "exec", "query", "close", "operations" ]
+  - component: aws.s3.docker
+    operations: ["create", "operations", "get", "list"]
+    config:
+      output:
+        key: $((uuid))
+      outputData: '{"data": {"maxResults": 10}}'
+  - component: aws.s3.terraform
+    operations: ["create", "operations", "get", "list"]
+    config:
+      output:
+        key: $((uuid))
+      outputData: '{"data": {"maxResults": 10}}'

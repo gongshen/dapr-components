@@ -1,0 +1,26 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: azurekeyvault
+spec:
+  type: secretstores.azure.keyvault
+  metadata:
+  - name: vaultName
+    secretKeyRef:
+        name: AzureKeyVaultName
+        key:  AzureKeyVaultName
+  - name: azureTenantId
+    secretKeyRef:
+        name: AzureKeyVaultTenantId
+        key:  AzureKeyVaultTenantId
+  - name: azureClientId
+    secretKeyRef:
+        name: AzureKeyVaultClientId
+        key:  AzureKeyVaultClientId
+  - name: azureCertificateFile
+    secretKeyRef:
+        name: AzureKeyVaultCert
+        key:  AzureKeyVaultCert
+
+auth:
+  secretStore: envvar-secret-store

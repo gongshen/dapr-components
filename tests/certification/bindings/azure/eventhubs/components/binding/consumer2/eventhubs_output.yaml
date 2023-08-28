@@ -1,0 +1,22 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: azure-output-binding
+  namespace: default
+spec:
+  type: bindings.azure.eventhubs
+  version: v1
+  metadata:
+  - name: consumerID
+    value: ehcertification2
+  - name: connectionString      # Azure EventHubs connection string
+    secretKeyRef:
+      name: AzureEventHubsBindingsConnectionString
+      value: AzureEventHubsBindingsConnectionString
+  - name: consumerGroup         # EventHubs consumer group
+    secretKeyRef:
+      name: AzureEventHubsBindingsConsumerGroup
+      value: AzureEventHubsBindingsConsumerGroup
+  # No storage account configuration here since this is only an output binding
+auth:
+  secretStore: envvar-secret-store

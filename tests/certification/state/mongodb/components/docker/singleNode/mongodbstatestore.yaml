@@ -1,0 +1,19 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: statestore
+spec:
+  type: state.mongodb
+  version: v1
+  initTimeout: 5m
+  metadata:
+    - name: connectionString
+      value: "mongodb://localhost:27017/admin"
+    - name: databaseName
+      value: "admin"
+    - name: writeConcern
+      value: "majority"
+    - name: readConcern
+      value: "local"
+    - name: operationTimeout
+      value: "10s"

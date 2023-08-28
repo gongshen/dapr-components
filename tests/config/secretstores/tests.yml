@@ -1,0 +1,16 @@
+# Supported operations: get, bulkget
+componentType: secretstores
+components:
+  - component: local.env
+    allOperations: true
+  - component: local.file
+    allOperations: true
+  - component: azure.keyvault.certificate
+    allOperations: true
+  - component: azure.keyvault.serviceprincipal
+    allOperations: true
+  - component: kubernetes
+    allOperations: true
+  - component: hashicorp.vault
+    allOperations: true
+

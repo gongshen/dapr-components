@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=../../../component-metadata-schema.json
+schemaVersion: v1
+type: state
+name: azure.cosmosdb
+version: v1
+status: stable
+title: "Azure Cosmos DB (SQL API)"
+urls:
+  - title: Reference
+    url: https://docs.dapr.io/reference/components-reference/supported-state-stores/setup-azure-cosmosdb/
+capabilities:
+  # If actorStateStore is present, the metadata key actorStateStore can be used
+  - actorStateStore
+  - crud
+  - transactional
+  - etag
+  - ttl
+  - query
+authenticationProfiles:
+  - title: "Master key"
+    description: |
+      Authenticate using a pre-shared "master key".
+    metadata:
+      - name: masterKey
+        required: true
+        sensitive: true
+        description: |
+          The key to authenticate to the Cosmos DB account.
+        example: '"my-secret-key"'
+builtinAuthenticationProfiles:
+  - name: "azuread"
+metadata:
+  - name: url
+    required: true
+    description: |
+      The Cosmos DB url.
+    example: '"https://******.documents.azure.com:443/"'
+    type: string
+  - name: database
+    required: true
+    description: |
+      The name of the database.
+    example: '"db"'
+    type: string
+  - name: collection
+    required: true
+    description: |
+      The name of the collection (container).
+    example: '"collection"'
+    type: string
+  - name: contenttype
+    required: false
+    description: |
+      The default content type of the data.
+    example: "application/json"
+    default: "application/json"
+    type: string
