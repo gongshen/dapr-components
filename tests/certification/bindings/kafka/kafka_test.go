@@ -69,7 +69,7 @@ const (
 )
 
 var (
-	brokers = []string{"localhost:19092", "localhost:29092", "localhost:39092"}
+	brokers          = []string{"localhost:19092", "localhost:29092", "localhost:39092"}
 )
 
 func TestKafka_with_retry(t *testing.T) {
